@@ -1,0 +1,322 @@
+[
+  {
+    "date": "02-OCT-2024",
+    "description": "2687736 ABONO TRANSFERENCIA SPEI HORA 22:46:33\nRECIBIDO DE BANAMEX\nDE LA CUENTA 002180034975915376\nD",
+    "amount": 2740.0,
+    "type": "Ingreso",
+    "bank": "Santander",
+    "category": "Transferencia"
+  },
+  {
+    "date": "02-OCT-2024",
+    "description": "2879610 ABONO TRANSFERENCIA SPEI HORA 05:31:43\nRECIBIDO DE BANORTE\nDE LA CUENTA 072180002355133060\nD",
+    "amount": 2740.0,
+    "type": "Ingreso",
+    "bank": "Santander",
+    "category": "Transferencia"
+  },
+  {
+    "date": "02-OCT-2024",
+    "description": "3804623 ABONO TRANSFERENCIA SPEI HORA 13:23:31\nRECIBIDO DE BANAMEX\nDE LA CUENTA 002180010077990514\nD",
+    "amount": 2541.0,
+    "type": "Ingreso",
+    "bank": "Santander",
+    "category": "Transferencia"
+  },
+  {
+    "date": "02-OCT-2024",
+    "description": "6112441 ABONO TRANSFERENCIA SPEI HORA 09:29:19\nRECIBIDO DE BBVA MEXICO\nDE LA CUENTA 0121800047766736",
+    "amount": 2740.0,
+    "type": "Ingreso",
+    "bank": "Santander",
+    "category": "Transferencia"
+  },
+  {
+    "date": "02-OCT-2024",
+    "description": "0000747 DEPOSITO EN EFECTIVO ATM 2,720.00 45,335.85",
+    "amount": 2720.0,
+    "type": "Ingreso",
+    "bank": "Santander",
+    "category": "Efectivo"
+  },
+  {
+    "date": "02-OCT-2024",
+    "description": "7491375 ABONO TRANSFERENCIA ENLACE Pago mant oct2024 Dep 1002 Decus 2,740.02 50,816.73",
+    "amount": 2740.02,
+    "type": "Ingreso",
+    "bank": "Santander",
+    "category": "Transferencia"
+  },
+  {
+    "date": "02-OCT-2024",
+    "description": "8159945 ABONO TRANSFERENCIA SPEI HORA 18:31:07\nRECIBIDO DE BBVA MEXICO\nDE LA CUENTA 0124380114787439",
+    "amount": 2740.84,
+    "type": "Ingreso",
+    "bank": "Santander",
+    "category": "Transferencia"
+  },
+  {
+    "date": "03-OCT-2024",
+    "description": "1471366 ABONO TRANSFERENCIA SPEI HORA 13:58:11\nRECIBIDO DE SCOTIABANK\nDE LA CUENTA 04418025604329854",
+    "amount": 2740.0,
+    "type": "Ingreso",
+    "bank": "Santander",
+    "category": "Transferencia"
+  },
+  {
+    "date": "03-OCT-2024",
+    "description": "2500915 ABONO TRANSFERENCIA SPEI HORA 18:33:32\nRECIBIDO DE BBVA MEXICO\nDE LA CUENTA 0121800048386777",
+    "amount": 2740.0,
+    "type": "Ingreso",
+    "bank": "Santander",
+    "category": "Transferencia"
+  },
+  {
+    "date": "04-OCT-2024",
+    "description": "3201036 ABONO TRANSFERENCIA SPEI HORA 00:57:07\nRECIBIDO DE INBURSA\nDE LA CUENTA 036180500118047310\nD",
+    "amount": 2740.0,
+    "type": "Ingreso",
+    "bank": "Santander",
+    "category": "Transferencia"
+  },
+  {
+    "date": "04-OCT-2024",
+    "description": "4937421 ABONO TRANSFERENCIA SPEI HORA 14:00:54\nRECIBIDO DE BANAMEX\nDE LA CUENTA 002180007676042290\nD",
+    "amount": 2740.54,
+    "type": "Ingreso",
+    "bank": "Santander",
+    "category": "Transferencia"
+  },
+  {
+    "date": "07-OCT-2024",
+    "description": "8410400 ABONO TRANSFERENCIA SPEI HORA 16:16:59\nRECIBIDO DE BBVA MEXICO\nDE LA CUENTA 0121800044302048",
+    "amount": 2740.0,
+    "type": "Ingreso",
+    "bank": "Santander",
+    "category": "Transferencia"
+  },
+  {
+    "date": "07-OCT-2024",
+    "description": "9537039 ABONO TRANSFERENCIA SPEI HORA 10:31:07\nRECIBIDO DE BANAMEX\nDE LA CUENTA 002180700783796406\nD",
+    "amount": 2740.0,
+    "type": "Ingreso",
+    "bank": "Santander",
+    "category": "Transferencia"
+  },
+  {
+    "date": "07-OCT-2024",
+    "description": "2370013 ABONO TRANSFERENCIA SPEI HORA 08:50:18\nRECIBIDO DE BBVA MEXICO\nDE LA CUENTA 0121800155391949",
+    "amount": 2740.71,
+    "type": "Ingreso",
+    "bank": "Santander",
+    "category": "Transferencia"
+  },
+  {
+    "date": "07-OCT-2024",
+    "description": "3071553 ABONO TRANSFERENCIA SPEI HORA 12:28:14\nRECIBIDO DE BBVA MEXICO\nDE LA CUENTA 0121800153680484",
+    "amount": 2740.19,
+    "type": "Ingreso",
+    "bank": "Santander",
+    "category": "Transferencia"
+  },
+  {
+    "date": "08-OCT-2024",
+    "description": "4691327 ABONO TRANSFERENCIA SPEI HORA 22:01:45\nRECIBIDO DE HSBC\nDE LA CUENTA 021180040619426523\nDEL ",
+    "amount": 2740.0,
+    "type": "Ingreso",
+    "bank": "Santander",
+    "category": "Transferencia"
+  },
+  {
+    "date": "08-OCT-2024",
+    "description": "5901666 ABONO TRANSFERENCIA SPEI HORA 13:36:13\nRECIBIDO DE BANAMEX\nDE LA CUENTA 002540700666098531\nD",
+    "amount": 2740.0,
+    "type": "Ingreso",
+    "bank": "Santander",
+    "category": "Transferencia"
+  },
+  {
+    "date": "09-OCT-2024",
+    "description": "8040717 ABONO TRANSFERENCIA SPEI HORA 11:45:09\nRECIBIDO DE BANORTE\nDE LA CUENTA 072420004129949669\nD",
+    "amount": 2740.0,
+    "type": "Ingreso",
+    "bank": "Santander",
+    "category": "Transferencia"
+  },
+  {
+    "date": "09-OCT-2024",
+    "description": "8795210 ABONO TRANSFERENCIA SPEI HORA 15:56:18\nRECIBIDO DE BBVA MEXICO\nDE LA CUENTA 0121800151008577",
+    "amount": 2740.0,
+    "type": "Ingreso",
+    "bank": "Santander",
+    "category": "Transferencia"
+  },
+  {
+    "date": "10-OCT-2024",
+    "description": "9672967 ABONO TRANSFERENCIA SPEI HORA 22:22:24\nRECIBIDO DE BBVA MEXICO\nDE LA CUENTA 0121800152849932",
+    "amount": 2740.0,
+    "type": "Ingreso",
+    "bank": "Santander",
+    "category": "Transferencia"
+  },
+  {
+    "date": "10-OCT-2024",
+    "description": "1027266 ABONO TRANSFERENCIA SPEI HORA 06:19:36\nRECIBIDO DE BANAMEX\nDE LA CUENTA 002180904975863985\nD",
+    "amount": 2738.0,
+    "type": "Ingreso",
+    "bank": "Santander",
+    "category": "Transferencia"
+  },
+  {
+    "date": "10-OCT-2024",
+    "description": "3988752 DEPOSITO EN EFECTIVO 0000DEPARTAMENTO1006 2,740.00 138,978.89",
+    "amount": 2740.0,
+    "type": "Ingreso",
+    "bank": "Santander",
+    "category": "Efectivo"
+  },
+  {
+    "date": "10-OCT-2024",
+    "description": "8532825 ABONO TRANSFERENCIA ENLACE 405 mant octubre 2024 2,750.00 144,448.89",
+    "amount": 2750.0,
+    "type": "Ingreso",
+    "bank": "Santander",
+    "category": "Transferencia"
+  },
+  {
+    "date": "10-OCT-2024",
+    "description": "1136562 ABONO TRANSFERENCIA ENLACE Transferencia a DECUS 2,740.00 149,928.89",
+    "amount": 2740.0,
+    "type": "Ingreso",
+    "bank": "Santander",
+    "category": "Transferencia"
+  },
+  {
+    "date": "11-OCT-2024",
+    "description": "3945991 ABONO TRANSFERENCIA SPEI HORA 00:25:41\nRECIBIDO DE BBVA MEXICO\nDE LA CUENTA 0121800018274606",
+    "amount": 2740.0,
+    "type": "Ingreso",
+    "bank": "Santander",
+    "category": "Transferencia"
+  },
+  {
+    "date": "14-OCT-2024",
+    "description": "3427112 ABONO TRANSFERENCIA SPEI HORA 09:06:32\nRECIBIDO DE BBVA MEXICO\nDE LA CUENTA 0121800044759248",
+    "amount": 5480.0,
+    "type": "Ingreso",
+    "bank": "Santander",
+    "category": "Transferencia"
+  },
+  {
+    "date": "15-OCT-2024",
+    "description": "2254278 ABONO TRANSFERENCIA ENLACE secadora 206 240.00 161,448.89",
+    "amount": 240.0,
+    "type": "Ingreso",
+    "bank": "Santander",
+    "category": "Transferencia"
+  },
+  {
+    "date": "17-OCT-2024",
+    "description": "0000130 PAGO CHEQUE EFECTIVO 11,940.54 89,817.90",
+    "amount": 11940.54,
+    "type": "Ingreso",
+    "bank": "Santander",
+    "category": "Efectivo"
+  },
+  {
+    "date": "17-OCT-2024",
+    "description": "0000132 PAGO CHEQUE EFECTIVO 1,200.00 50,883.90",
+    "amount": 1200.0,
+    "type": "Ingreso",
+    "bank": "Santander",
+    "category": "Efectivo"
+  },
+  {
+    "date": "17-OCT-2024",
+    "description": "0634733 ABONO TRANSFERENCIA ENLACE secadora 206 80.00 51,283.90",
+    "amount": 80.0,
+    "type": "Ingreso",
+    "bank": "Santander",
+    "category": "Transferencia"
+  },
+  {
+    "date": "18-OCT-2024",
+    "description": "1163537 ABONO TRANSFERENCIA SPEI HORA 11:16:40\nRECIBIDO DE BAJIO\nDE LA CUENTA 030225612276602019\nDEL",
+    "amount": 2740.0,
+    "type": "Ingreso",
+    "bank": "Santander",
+    "category": "Transferencia"
+  },
+  {
+    "date": "21-OCT-2024",
+    "description": "7796869 ABONO TRANSFERENCIA SPEI HORA 22:08:25\nRECIBIDO DE SCOTIABANK\nDE LA CUENTA 04469425604429416",
+    "amount": 160.0,
+    "type": "Ingreso",
+    "bank": "Santander",
+    "category": "Transferencia"
+  },
+  {
+    "date": "22-OCT-2024",
+    "description": "2641757 ABONO TRANSFERENCIA SPEI HORA 11:47:22\nRECIBIDO DE BANAMEX\nDE LA CUENTA 002180904975863985\nD",
+    "amount": 2000.0,
+    "type": "Ingreso",
+    "bank": "Santander",
+    "category": "Transferencia"
+  },
+  {
+    "date": "23-OCT-2024",
+    "description": "0000128 PGO CHEQUE OTRAS INSTITUCIONES 0440974 RFC GHU141120LE6 32,891.60 26,379.10",
+    "amount": 32891.6,
+    "type": "Ingreso",
+    "bank": "Santander",
+    "category": "Otros"
+  },
+  {
+    "date": "28-OCT-2024",
+    "description": "4296165 ABONO TRANSFERENCIA ENLACE Lavadoras 240.00 26,779.10",
+    "amount": 240.0,
+    "type": "Ingreso",
+    "bank": "Santander",
+    "category": "Transferencia"
+  },
+  {
+    "date": "29-OCT-2024",
+    "description": "5929017 ABONO TRANSFERENCIA SPEI HORA 20:15:30\nRECIBIDO DE NU MEXICO\nDE LA CUENTA 638180010131211192",
+    "amount": 80.0,
+    "type": "Ingreso",
+    "bank": "Santander",
+    "category": "Transferencia"
+  },
+  {
+    "date": "30-OCT-2024",
+    "description": "1274061 ABONO TRANSFERENCIA SPEI HORA 21:31:41\nRECIBIDO DE NU MEXICO\nDE LA CUENTA 638180010131211192",
+    "amount": 160.0,
+    "type": "Ingreso",
+    "bank": "Santander",
+    "category": "Transferencia"
+  },
+  {
+    "date": "31-OCT-2024",
+    "description": "0000000 ABONO TRANSFERENCIA ENLACE Pag Fac 91FE 84F5 46E8A 31B5A 61,241.36 91,240.46",
+    "amount": 61241.36,
+    "type": "Ingreso",
+    "bank": "Santander",
+    "category": "Transferencia"
+  },
+  {
+    "date": "31-OCT-2024",
+    "description": "0000000 COM MEMBRESIA CUENTA E PYME MEMBRESIA 750.00 93,230.46",
+    "amount": 750.0,
+    "type": "Ingreso",
+    "bank": "Santander",
+    "category": "Otros"
+  },
+  {
+    "date": "31-OCT-2024",
+    "description": "5976324 ABONO TRANSFERENCIA SPEI HORA 20:33:09\nRECIBIDO DE BANORTE\nDE LA CUENTA 072420004302380757\nD",
+    "amount": 3014.0,
+    "type": "Ingreso",
+    "bank": "Santander",
+    "category": "Transferencia"
+  }
+]
