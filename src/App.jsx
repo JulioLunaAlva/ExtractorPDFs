@@ -3,7 +3,7 @@ import {
   BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip as RechartsTooltip, ResponsiveContainer,
   PieChart, Pie, Cell, Legend, AreaChart, Area
 } from 'recharts';
-import { motion, AnimatePresence } from 'framer-motion';
+// Framer motion removed for standard rendering
 import { 
   Download, Search, Filter, TrendingDown, TrendingUp, Loader2,
   Trash2, Calendar, Activity, PlusCircle, Briefcase, ArrowDownUp,
@@ -30,8 +30,8 @@ const App = () => {
   // V4 Advanced Filters
   const [filterBank, setFilterBank] = useState('ALL');
   const [filterType, setFilterType] = useState('ALL');
-  const [filterMinAmount, setFilterMinAmount] = useState('');
-  const [filterMaxAmount, setFilterMaxAmount] = useState('');
+  const [filterMinAmount] = useState('');
+  const [filterMaxAmount] = useState('');
   const [filterDateStart, setFilterDateStart] = useState('');
   const [filterDateEnd, setFilterDateEnd] = useState('');
   const [sortConfig, setSortConfig] = useState({ key: 'date', direction: 'desc' });
@@ -66,8 +66,9 @@ const App = () => {
         } else {
             toast.warning(`${file.name}: Sin movimientos reconocibles.`);
         }
-      } catch (error) {
+      } catch (err) {
         toast.error(`Error procesando ${file.name}`);
+        console.error(err);
       }
     }
 
@@ -174,7 +175,7 @@ const App = () => {
     }
   };
 
-  const TopNav = () => (
+  const renderTopNav = () => (
     <header className="flex flex-col md:flex-row items-center justify-between gap-6 mb-8 pt-4">
       <div className="flex items-center gap-4">
         <div className="w-12 h-12 bg-primary/20 border border-primary/40 rounded-xl flex items-center justify-center shadow-[0_0_20px_rgba(59,130,246,0.5)]">
@@ -216,8 +217,8 @@ const App = () => {
     </header>
   );
 
-  const DashboardView = () => (
-    <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -20 }} className="space-y-6">
+  const renderDashboardView = () => (
+    <div className="space-y-6">
       {/* Metrics Row */}
       <div className="grid grid-cols-1 md:grid-cols-12 gap-6">
         <div className="panel p-8 col-span-1 md:col-span-6 relative overflow-hidden group">
@@ -347,11 +348,11 @@ const App = () => {
               </table>
           </div>
       </div>
-    </motion.div>
+    </div>
   );
 
-  const AnalyticsView = () => (
-    <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -20 }} className="space-y-6">
+  const renderAnalyticsView = () => (
+    <div className="space-y-6">
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         <div className="panel p-6 h-[400px] flex flex-col">
           <div className="flex items-center gap-2 mb-6">
@@ -401,11 +402,11 @@ const App = () => {
           </div>
         </div>
       </div>
-    </motion.div>
+    </div>
   );
 
-  const BudgetView = () => (
-    <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -20 }} className="space-y-6">
+  const renderBudgetView = () => (
+    <div className="space-y-6">
       <div className="panel p-6 border-l-4 border-l-primary flex bg-surface-elevated/50 justify-between items-center">
         <div>
           <h2 className="text-lg font-black text-white uppercase tracking-widest mb-1 shadow-sm">Supervisión de Presupuestos</h2>
@@ -457,7 +458,7 @@ const App = () => {
           );
         })}
       </div>
-    </motion.div>
+    </div>
   );
 
   return (
@@ -481,12 +482,12 @@ const App = () => {
         </div>
       ) : (
         <div className="max-w-7xl mx-auto">
-          <TopNav />
-          <AnimatePresence mode="wait">
-            {currentTab === 'dashboard' && <DashboardView key="dashboard" />}
-            {currentTab === 'analytics' && <AnalyticsView key="analytics" />}
-            {currentTab === 'budget' && <BudgetView key="budget" />}
-          </AnimatePresence>
+          {renderTopNav()}
+          <div className="mt-6">
+            {currentTab === 'dashboard' && React.cloneElement(renderDashboardView(), { key: 'dashboard' })}
+            {currentTab === 'analytics' && React.cloneElement(renderAnalyticsView(), { key: 'analytics' })}
+            {currentTab === 'budget' && React.cloneElement(renderBudgetView(), { key: 'budget' })}
+          </div>
         </div>
       )}
     </div>
