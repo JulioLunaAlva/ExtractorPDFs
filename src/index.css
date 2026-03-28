@@ -2,57 +2,35 @@
 @config "../tailwind.config.js";
 
 @layer base {
-  :root {
-    --background: 0 0% 98%;      /* Light Gray/Off-White */
-    --foreground: 240 10% 3.9%;  /* Near Black */
-    --card: 0 0% 100%;           /* Pure White */
-    --card-foreground: 240 10% 3.9%;
-    --popover: 0 0% 100%;
-    --popover-foreground: 240 10% 3.9%;
-    --primary: 240 5.9% 10%;
-    --primary-foreground: 0 0% 98%;
-    --secondary: 240 4.8% 95.9%; /* Very Light Gray */
-    --secondary-foreground: 240 5.9% 10%;
-    --muted: 240 4.8% 95.9%;
-    --muted-foreground: 240 3.8% 46.1%; /* Slate Gray */
-    --accent: 240 4.8% 95.9%;
-    --accent-foreground: 240 5.9% 10%;
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 0 0% 98%;
-    --border: 240 5.9% 90%;      /* Subtle Border */
-    --input: 240 5.9% 90%;
-    --ring: 240 5.9% 10%;
-    --radius: 0.5rem;            /* Sharper Radii for Data-First feel */
-  }
-}
-
-@layer base {
-  * {
-    border-color: hsl(var(--border));
-  }
   body {
-    background-color: hsl(var(--background));
-    color: hsl(var(--foreground));
+    background-color: #0b1326;
+    color: #dae2fd;
     font-family: 'Inter', system-ui, -apple-system, sans-serif;
     -webkit-font-smoothing: antialiased;
     letter-spacing: -0.01em;
   }
 }
 
-/* Data-First UI Components */
+/* Glassmorphism & Neon Blue Components */
 .panel {
-  @apply border border-[hsl(var(--border))] rounded-lg shadow-sm;
+  @apply bg-surface-container border border-border rounded-xl shadow-[0_20px_40px_rgba(0,0,0,0.4)];
+  backdrop-filter: blur(20px);
 }
 
-.stat-value {
-  @apply text-3xl font-bold tracking-tight text-slate-900;
+.panel-elevated {
+  @apply bg-surface-elevated border border-border rounded-xl shadow-[0_30px_60px_rgba(0,0,0,0.5)];
+  backdrop-filter: blur(24px);
 }
 
-.stat-label {
-  @apply text-xs font-semibold uppercase tracking-wider text-slate-500;
+/* Minimalist Inputs */
+.input-minimal {
+  @apply bg-surface-elevated border border-border rounded-lg px-3 py-2 focus:ring-1 focus:ring-primary focus:border-primary transition-all text-sm font-medium w-full text-foreground placeholder-slate-500;
+}
+.input-minimal[type="date"]::-webkit-calendar-picker-indicator {
+  filter: invert(1);
 }
 
-/* Custom Scrollbar for dense tables */
+/* Custom Scrollbar */
 .custom-scrollbar::-webkit-scrollbar {
   width: 6px;
   height: 6px;
@@ -61,27 +39,22 @@
   background: transparent;
 }
 .custom-scrollbar::-webkit-scrollbar-thumb {
-  background: #e2e8f0;
+  background: #283044;
   border-radius: 4px;
 }
 .custom-scrollbar::-webkit-scrollbar-thumb:hover {
-  background: #cbd5e1;
+  background: #3b82f6;
 }
 
-/* Minimalist Inputs */
-.input-minimal {
-  @apply bg-transparent border-t-0 border-x-0 border-b-2 border-slate-200 rounded-none px-0 py-2 focus:ring-0 focus:border-slate-900 transition-colors text-sm font-medium w-full;
-}
-
-/* Minimalist Buttons */
+/* Buttons */
 .btn-primary {
-  @apply bg-slate-900 hover:bg-slate-800 text-white px-5 py-2.5 rounded-lg font-semibold shadow-sm transition-all active:scale-95 text-sm flex items-center gap-2;
+  @apply bg-gradient-to-br from-primary to-blue-700 hover:from-primary-glow hover:to-primary text-white px-5 py-2.5 rounded-lg font-bold shadow-[0_0_15px_rgba(59,130,246,0.3)] transition-all active:scale-95 text-sm flex items-center gap-2;
 }
 
 .btn-secondary {
-  @apply bg-white hover:bg-slate-50 border border-slate-200 text-slate-700 px-5 py-2.5 rounded-lg font-semibold transition-all active:scale-95 text-sm flex items-center gap-2 shadow-sm;
+  @apply bg-surface-elevated hover:bg-surface border border-border text-foreground px-5 py-2.5 rounded-lg font-semibold transition-all active:scale-95 text-sm flex items-center gap-2;
 }
 
 .btn-ghost {
-  @apply hover:bg-slate-100 text-slate-600 px-4 py-2 rounded-lg font-medium transition-colors text-sm flex items-center gap-2;
+  @apply hover:bg-surface border border-transparent text-slate-300 hover:text-white px-4 py-2 rounded-lg font-medium transition-colors text-sm flex items-center gap-2;
 }
