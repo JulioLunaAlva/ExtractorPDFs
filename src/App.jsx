@@ -1,4 +1,4 @@
-import React, { useState, useMemo, useEffect } from 'react';
+import React, { useState, useMemo, useEffect, useRef } from 'react';
 import { 
   BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip as RechartsTooltip, ResponsiveContainer,
   PieChart, Pie, Cell, Legend, AreaChart, Area
@@ -25,6 +25,7 @@ const App = () => {
   const [isParsing, setIsParsing] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
   const [currentTab, setCurrentTab] = useState('dashboard');
+  const fileInputRef = useRef(null);
   
   // V4 Advanced Filters
   const [filterBank, setFilterBank] = useState('ALL');
@@ -201,11 +202,10 @@ const App = () => {
         ))}
       </div>
       <div className="flex items-center gap-3">
-        <label htmlFor="file-upload-nav" className="btn-primary cursor-pointer">
+        <button onClick={() => fileInputRef.current?.click()} className="btn-primary" disabled={isParsing}>
           {isParsing ? <Loader2 className="w-4 h-4 animate-spin" /> : <PlusCircle className="w-4 h-4" />}
           Importar PDFs
-          <input id="file-upload-nav" type="file" multiple accept=".pdf" className="hidden" onChange={handleFileUpload} disabled={isParsing} />
-        </label>
+        </button>
         <button onClick={() => exportToExcel(processedData)} className="btn-secondary" title="Exportar Matriz Excel" disabled={movements.length === 0}>
           <Download className="w-4 h-4" />
         </button>
@@ -463,6 +463,7 @@ const App = () => {
   return (
     <div className="min-h-screen p-4 md:p-8 relative">
       <Toaster position="top-right" theme="dark" richColors />
+      <input ref={fileInputRef} type="file" multiple accept=".pdf" className="hidden" onChange={handleFileUpload} disabled={isParsing} />
       
       {!movements.length && !isParsing ? (
         <div className="max-w-3xl mx-auto mt-20 panel p-12 text-center border-dashed border-2 bg-transparent relative overflow-hidden group">
@@ -474,10 +475,9 @@ const App = () => {
             <p className="text-slate-400 text-sm mb-10 leading-relaxed max-w-lg mx-auto font-medium">
                 Importa estados de BBVA, Inbursa o Scotiabank. El Motor extraerá la semántica y reconstruirá la cronología en una interfaz Premium de alto contraste.
             </p>
-            <label htmlFor="file-upload-init" className="btn-primary mx-auto w-fit cursor-pointer px-10 py-4 text-base shadow-xl">
+            <button onClick={() => fileInputRef.current?.click()} className="btn-primary mx-auto w-fit px-10 py-4 text-base shadow-xl" disabled={isParsing}>
                 Ingresar Estados de Cuenta
-                <input id="file-upload-init" type="file" multiple accept=".pdf" className="hidden" onChange={handleFileUpload} disabled={isParsing} />
-            </label>
+            </button>
         </div>
       ) : (
         <div className="max-w-7xl mx-auto">
