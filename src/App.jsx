@@ -201,13 +201,16 @@ const App = () => {
         ))}
       </div>
       <div className="flex items-center gap-3">
-        <label className="btn-primary cursor-pointer">
+        <label htmlFor="file-upload-nav" className="btn-primary cursor-pointer">
           {isParsing ? <Loader2 className="w-4 h-4 animate-spin" /> : <PlusCircle className="w-4 h-4" />}
           Importar PDFs
-          <input type="file" multiple accept=".pdf" className="hidden" onChange={handleFileUpload} disabled={isParsing} />
+          <input id="file-upload-nav" type="file" multiple accept=".pdf" className="hidden" onChange={handleFileUpload} disabled={isParsing} />
         </label>
         <button onClick={() => exportToExcel(processedData)} className="btn-secondary" title="Exportar Matriz Excel" disabled={movements.length === 0}>
           <Download className="w-4 h-4" />
+        </button>
+        <button onClick={clearHistory} className="btn-ghost flex-shrink-0 text-danger hover:bg-danger/10 hover:text-danger" title="Borrar Extracción" disabled={isParsing}>
+          <Trash2 className="w-4 h-4" />
         </button>
       </div>
     </header>
@@ -471,9 +474,9 @@ const App = () => {
             <p className="text-slate-400 text-sm mb-10 leading-relaxed max-w-lg mx-auto font-medium">
                 Importa estados de BBVA, Inbursa o Scotiabank. El Motor extraerá la semántica y reconstruirá la cronología en una interfaz Premium de alto contraste.
             </p>
-            <label className="btn-primary mx-auto w-fit cursor-pointer px-10 py-4 text-base shadow-xl">
+            <label htmlFor="file-upload-init" className="btn-primary mx-auto w-fit cursor-pointer px-10 py-4 text-base shadow-xl">
                 Ingresar Estados de Cuenta
-                <input type="file" multiple accept=".pdf" className="hidden" onChange={handleFileUpload} />
+                <input id="file-upload-init" type="file" multiple accept=".pdf" className="hidden" onChange={handleFileUpload} disabled={isParsing} />
             </label>
         </div>
       ) : (
