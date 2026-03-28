@@ -466,30 +466,14 @@ const App = () => {
       <Toaster position="top-right" theme="dark" richColors />
       <input ref={fileInputRef} type="file" multiple accept=".pdf" className="hidden" onChange={handleFileUpload} disabled={isParsing} />
       
-      {!movements.length && !isParsing ? (
-        <div className="max-w-3xl mx-auto mt-20 panel p-12 text-center border-dashed border-2 bg-transparent relative overflow-hidden group">
-            <div className="absolute inset-0 bg-primary/5 opacity-0 group-hover:opacity-100 transition-opacity"></div>
-            <div className="w-20 h-20 bg-surface-container rounded-2xl flex items-center justify-center mx-auto mb-8 shadow-[0_0_30px_rgba(59,130,246,0.2)] border border-primary/30 group-hover:scale-110 transition-transform">
-                <LayoutDashboard className="w-10 h-10 text-primary-glow drop-shadow-[0_0_8px_rgba(96,165,250,0.8)]" />
-            </div>
-            <h2 className="text-3xl font-black text-white mb-4 tracking-tighter uppercase drop-shadow-md">Motor Obsidian Activado</h2>
-            <p className="text-slate-400 text-sm mb-10 leading-relaxed max-w-lg mx-auto font-medium">
-                Importa estados de BBVA, Inbursa o Scotiabank. El Motor extraerá la semántica y reconstruirá la cronología en una interfaz Premium de alto contraste.
-            </p>
-            <button onClick={() => fileInputRef.current?.click()} className="btn-primary mx-auto w-fit px-10 py-4 text-base shadow-xl" disabled={isParsing}>
-                Ingresar Estados de Cuenta
-            </button>
+      <div className="max-w-7xl mx-auto">
+        {renderTopNav()}
+        <div className="mt-6">
+          {currentTab === 'dashboard' && React.cloneElement(renderDashboardView(), { key: 'dashboard' })}
+          {currentTab === 'analytics' && React.cloneElement(renderAnalyticsView(), { key: 'analytics' })}
+          {currentTab === 'budget' && React.cloneElement(renderBudgetView(), { key: 'budget' })}
         </div>
-      ) : (
-        <div className="max-w-7xl mx-auto">
-          {renderTopNav()}
-          <div className="mt-6">
-            {currentTab === 'dashboard' && React.cloneElement(renderDashboardView(), { key: 'dashboard' })}
-            {currentTab === 'analytics' && React.cloneElement(renderAnalyticsView(), { key: 'analytics' })}
-            {currentTab === 'budget' && React.cloneElement(renderBudgetView(), { key: 'budget' })}
-          </div>
-        </div>
-      )}
+      </div>
     </div>
   );
 };
