@@ -73,14 +73,30 @@ const App = () => {
     }
 
     if (allNewMovements.length > 0) {
+        // Tag each new movement with its position within the current batch so that
+        // two legitimate identical rows (e.g., 8 x SPEI commission on same day) 
+        // are distinguished by their occurrence index, not collapsed into one.
+        const taggedNew = allNewMovements.map((m, idx) => ({ ...m, _batchIdx: idx }));
+
         setMovements(prev => {
-          const combined = [...allNewMovements, ...prev];
-          const seen = new Set();
-          return combined.filter(m => {
-            const key = `${m.date}-${m.description.substring(0,25)}-${m.amount}-${m.bank}`;
-            if (seen.has(key)) return false;
-            seen.add(key); return true;
+          // Build an occurrence map for existing movements
+          const existingKeys = new Map();
+          prev.forEach(m => {
+            const key = `${m.date}-${m.description.substring(0,30)}-${m.amount}-${m.bank}`;
+            existingKeys.set(key, (existingKeys.get(key) || 0) + 1);
           });
+
+          // For each new movement, only block it if existing already has >= that many occurrences
+          const newKeyCount = new Map();
+          const filtered = taggedNew.filter(m => {
+            const key = `${m.date}-${m.description.substring(0,30)}-${m.amount}-${m.bank}`;
+            const occurrence = (newKeyCount.get(key) || 0) + 1;
+            newKeyCount.set(key, occurrence);
+            // Block if existing data already has this many (or more) of this movement
+            return (existingKeys.get(key) || 0) < occurrence;
+          }).map(({ _batchIdx: _b, ...m }) => m); // strip the temp tag
+
+          return [...filtered, ...prev];
         });
     }
     setIsParsing(false);
