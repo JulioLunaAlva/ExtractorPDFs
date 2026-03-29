@@ -199,9 +199,9 @@ const App = () => {
         </div>
         <div>
           <h1 className="text-2xl font-black tracking-tight text-white drop-shadow-[0_2px_10px_rgba(255,255,255,0.2)]">
-            STATEMENT <span className="text-primary-glow">MINER</span>
+            EXTRACTOR <span className="text-primary-glow">PDFs</span>
           </h1>
-          <p className="text-[10px] font-bold text-slate-400 uppercase tracking-[0.3em]">Obsidian Analytics Engine</p>
+          <p className="text-[10px] font-bold text-slate-400 uppercase tracking-[0.3em]">Movimientos Bancarios</p>
         </div>
       </div>
       <div className="flex gap-2">
