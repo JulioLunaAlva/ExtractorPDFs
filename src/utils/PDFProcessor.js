@@ -241,8 +241,8 @@ const parseMifel = (lines) => {
 // ─────────────────────────────────────────────────────────────────────────────
 const parseBanorte = (lines, year) => {
   const movements = [];
-  // In Banorte the date appears as two tokens like "10   OCT" or "08   OCT"
-  const dateRE = /^(\d{1,2})\s{1,6}(ENE|FEB|MAR|ABR|MAY|JUN|JUL|AGO|SEP|OCT|NOV|DIC)\s{1,6}(.+)/i;
+  // Banorte/Scotiabank: date as "DD   OCT" or "08   OCT" — possibly 1-6 spaces between tokens
+  const dateRE = /^(\d{1,2})\s{1,8}(ENE|FEB|MAR|ABR|MAY|JUN|JUL|AGO|SEP|OCT|NOV|DIC)\s{1,8}(.+)/i;
   const amountRE = /\$?([\d,]+\.\d{2})/g;
   
   for (let i = 0; i < lines.length; i++) {
@@ -254,40 +254,47 @@ const parseBanorte = (lines, year) => {
     const isoDate = toISO(Number(dd), mon, year);
     if (!isoDate) continue;
     
-    // Skip header rows and noise
-    if (/SALDO ANTERIOR|SALDO INICIAL|FECHA OPER|REF ERENCIA/i.test(rest)) continue;
-    if (/Dep.?sitos?\s+Intereses\s+Retiros/i.test(rest)) continue;
+    // Skip noise lines (page headers, column headers)
+    if (/^F\s+ec\s+ha|Detalle\s+de\s+tus|PAGINA\s+\d|D\s+e\s+p/i.test(rest)) continue;
+    if (/SALDO ANTERIOR|SALDO INICIAL|BAL|PERIODO/i.test(rest) && !/\$/.test(rest)) continue;
     
-    // Amounts: grab last two numbers from this + next lines (deposit/retiro, saldo)
+    // Build full text block — peek ahead up to 6 lines looking for amounts
     let fullText = rest;
-    // peek at next few lines for continuation
     let j = i + 1;
-    while (j < lines.length && j < i + 4 && !/^\d{1,2}\s{1,6}(?:ENE|FEB|MAR|ABR|MAY|JUN|JUL|AGO|SEP|OCT|NOV|DIC)/i.test(lines[j])) {
-      fullText += '  ' + lines[j];
+    while (j < lines.length && j < i + 7) {
+      const peek = lines[j];
+      // Stop if next line is a new transaction date
+      if (/^\d{1,2}\s{1,8}(?:ENE|FEB|MAR|ABR|MAY|JUN|JUL|AGO|SEP|OCT|NOV|DIC)\s/i.test(peek)) break;
+      fullText += '  ' + peek;
       j++;
     }
+
+    // Normalize multi-spaces to single space for consistent matching
+    const normalized = fullText.replace(/\s{2,}/g, ' ').trim();
     
-    const amounts = [...fullText.matchAll(amountRE)].map(a => parseAmount(a[1])).filter(v => v !== null && v > 0);
+    const amounts = [...normalized.matchAll(amountRE)].map(a => parseAmount(a[1])).filter(v => v !== null && v > 0);
     if (amounts.length < 1) continue;
     
-    // First amount is usually the transaction, last is balance
     const amount = amounts[0];
-    if (amount < 1) continue; // skip trivial commissions
     
-    // Type detection:
+    // Type detection on normalized text
+    const upper = normalized.toUpperCase();
     let type = 'Egreso';
-    if (/SPEI RECIBIDO|TRANSF INTERBANCARIA SPEI\s+\d|DEPOSITO/.test(fullText.toUpperCase())) type = 'Ingreso';
-    if (/TRASPASOS A OTROS|SEL TRANSF|PAGO|\bCARGO\b/i.test(fullText)) type = 'Egreso';
+    if (/TRANSF INTERBANCARIA SPEI \d|SPEI RECIBIDO|DEPOSITO EFECTIVO|DEPOSITO/.test(upper)) type = 'Ingreso';
+    if (/TRASPASOS A OTROS|SEL TRANSF|SWEB|IVA.*COMIS|COMISION.*SPEI/.test(upper)) type = 'Egreso';
     
-    // Extract description: before first amount
-    const firstAmtIdx = fullText.search(/\$[\d,]+\.\d{2}|\d{1,3}(?:,\d{3})*\.\d{2}/);
-    const desc = (firstAmtIdx > 0 ? fullText.substring(0, firstAmtIdx) : fullText).trim().substring(0, 100);
+    // Description — everything before the first dollar amount
+    const firstAmtIdx = normalized.search(/\$[\d,]+\.\d{2}/);
+    let desc = (firstAmtIdx > 0 ? normalized.substring(0, firstAmtIdx) : normalized).trim();
+    // Strip leading reference numbers (16+ chars)
+    desc = desc.replace(/^\d{10,}\s+/, '').trim().substring(0, 100);
     if (!desc || desc.length < 2) continue;
     
     movements.push({ date: isoDate, description: desc, amount, type, category: getCategory(desc) });
   }
   return movements;
 };
+
 
 
 // ─────────────────────────────────────────────────────────────────────────────
@@ -358,18 +365,97 @@ const parseInbursa = (lines, year) => {
 
 
 // ─────────────────────────────────────────────────────────────────────────────
+// MULTIVA PARSER
+// FORMAT: DD/MM/YYYY | REFERENCIA | DESCRIPCION | RETIROS | DEPOSITOS | SALDO
+// Identical structure to Mifel but detected separately
+// ─────────────────────────────────────────────────────────────────────────────
+const parseMultiva = (lines) => {
+  // Multiva uses same tabular format as Mifel: DD/MM/YYYY date prefix
+  return parseMifel(lines);
+};
+
+
+// ─────────────────────────────────────────────────────────────────────────────
+// BBVA PARSER
+// FORMAT: DD/MON | DD/MON | COD DESCRIPCION | REFERENCIA | CARGOS | ABONOS | SALDO
+// Dates appear as "02/SEP" or "02/SEP" in first column
+// ─────────────────────────────────────────────────────────────────────────────
+const parseBBVA = (lines, year) => {
+  const movements = [];
+  // BBVA date: "02/SEP" or "02/09/2024" or "02/SEP/2024"
+  const dateRE = /^(\d{2})[/](ENE|FEB|MAR|ABR|MAY|JUN|JUL|AGO|SEP|OCT|NOV|DIC|\d{2})/i;
+  const fullDateRE = /^(\d{2})[/](\d{2})[/](\d{4})/;
+  const amountRE = /(\d{1,3}(?:,\d{3})*\.\d{2})/g;
+  let inTable = false;
+
+  for (let i = 0; i < lines.length; i++) {
+    const line = lines[i];
+    if (/FECHA.*DESCRIPCI|OPER.*LIQ.*COD/i.test(line)) { inTable = true; continue; }
+    if (!inTable) continue;
+
+    // Try full date first: DD/MM/YYYY
+    let isoDate = null;
+    const fullM = line.match(fullDateRE);
+    const shortM = line.match(dateRE);
+
+    if (fullM) {
+      isoDate = `${fullM[3]}-${fullM[2]}-${fullM[1]}`;
+    } else if (shortM) {
+      const monOrNum = shortM[2];
+      if (MONTH_MAP[monOrNum.toUpperCase()]) {
+        isoDate = toISO(shortM[1], monOrNum, year);
+      } else {
+        isoDate = `${year}-${monOrNum}-${shortM[1]}`;
+      }
+    }
+    if (!isoDate) continue;
+
+    // Collect full text for this transaction (up to next date)
+    let fullText = line;
+    let j = i + 1;
+    while (j < lines.length && !lines[j].match(dateRE) && !lines[j].match(fullDateRE) && j < i + 5) {
+      fullText += ' ' + lines[j];
+      j++;
+    }
+
+    const amounts = [...fullText.matchAll(amountRE)].map(a => parseAmount(a[1])).filter(v => v !== null && v > 0);
+    if (amounts.length < 1) continue;
+
+    const amount = amounts[0];
+    if (amount < 1) continue;
+
+    // Type detection
+    const upper = fullText.toUpperCase();
+    let type = 'Egreso';
+    if (/SPEI RECIBIDO|T20 SPEI RECIB|DEPOSITO|ABONO/.test(upper)) type = 'Ingreso';
+    if (/SPEI ENVIADO|CARGO|RETIRO|COMISION|IVA/.test(upper)) type = 'Egreso';
+
+    // Description: strip the date token and amounts
+    const firstAmtI = fullText.search(amountRE);
+    const desc = (fullText.substring(line.match(dateRE)?.[0]?.length || 0, firstAmtI > 0 ? firstAmtI : 80)).trim().substring(0, 100);
+
+    if (desc.length > 2 && !/SALDO|PAGINA|DETALLE/i.test(desc)) {
+      movements.push({ date: isoDate, description: desc, amount, type, category: getCategory(desc) });
+    }
+  }
+  return movements;
+};
+
+
+// ─────────────────────────────────────────────────────────────────────────────
 // BANK DETECTION
 // ─────────────────────────────────────────────────────────────────────────────
 const detectBank = (text) => {
   const t = text.substring(0, 5000).toUpperCase();
   if (/SANTANDER/.test(t)) return 'Santander';
-  if (/ENLACE GLOBAL PM|BANORTE/.test(t)) return 'Banorte';
-  if (/ASCENSO PM/.test(t)) return 'Banorte';
+  if (/ENLACE GLOBAL PM|ASCENSO PM/.test(t)) return 'Banorte';
+  if (/SCOTIABANK|SCOTIAB/.test(t)) return 'Scotiabank';
   if (/MIFEL|GRUPO FINANCIERO MIFEL/.test(t)) return 'Mifel';
   if (/BANCO INBURSA|INBURSA/.test(t)) return 'Inbursa';
-  if (/SCOTIABANK|SCOTIAB/.test(t)) return 'Scotiabank';
-  if (/BBVA|BANCOMER/.test(t)) return 'BBVA';
-  if (/MULTIVA/.test(t)) return 'Multiva';
+  if (/CASH MANAGEMENT|BBVA MEXICO|BBVA BANCOMER/.test(t)) return 'BBVA';
+  if (/MULTIVA|CUENTA EJE/.test(t)) return 'Multiva';
+  if (/BANORTE/.test(t)) return 'Banorte';
+  if (/BBVA/.test(t)) return 'BBVA';
   return 'Desconocido';
 };
 
@@ -399,7 +485,13 @@ export const extractMovementsFromPDF = async (file) => {
       movements = parseSantander(lines, year);
       break;
     case 'Mifel':
-      movements = parseMifel(lines, year);
+      movements = parseMifel(lines);
+      break;
+    case 'Multiva':
+      movements = parseMultiva(lines);
+      break;
+    case 'BBVA':
+      movements = parseBBVA(lines, year);
       break;
     case 'Banorte':
     case 'Scotiabank':
@@ -409,7 +501,7 @@ export const extractMovementsFromPDF = async (file) => {
       movements = parseInbursa(lines, year);
       break;
     default:
-      // Generic fallback for unknown banks using Santander-style detection
+      // Generic fallback
       movements = parseSantander(lines, year);
       if (movements.length < 3) movements = parseBanorte(lines, year);
       if (movements.length < 3) movements = parseInbursa(lines, year);
